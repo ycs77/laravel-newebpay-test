@@ -38,7 +38,20 @@ Route::prefix('/payment')->group(function () {
         return response()->json($result->data());
     });
 
-    // 1-3. 測試 ReturnUrl (付款完成後的通知連結，以幕後方式回傳給商店相關支付結果資料)
+    // 1-3. 測試 NotifyUrl (付款完成後的通知連結，以幕後方式回傳給商店相關支付結果資料)
+    Route::get('/notify', function () {
+        return NewebPay::payment()
+            ->withOrder('Order'.time())
+            ->withAmount(1050)
+            ->withItemDescription('測試商品')
+            ->withEmail('customer@example.com')
+            ->withNotifyUrl(config('app.url').'/payment/notify/callback')
+            ->submit();
+    });
+    Route::post('/notify/callback', function (Request $request) {
+        $result = NewebPay::result($request);
+        logger()->info('NewebPay NotifyUrl Callback', $result->data());
+    });
 
     // 1-4. 測試 CustomerUrl (商店取號網址)
 
