@@ -72,5 +72,17 @@ Route::prefix('/payment')->group(function () {
     });
 
     // 1-5. 測試 ClientBackUrl (付款時點擊「返回按鈕」的網址)
+    Route::get('/clientback', function () {
+        return NewebPay::payment()
+            ->withOrder('Order'.time())
+            ->withAmount(1050)
+            ->withItemDescription('測試商品')
+            ->withEmail('customer@example.com')
+            ->withClientBackUrl(config('app.url').'/payment/clientback/page')
+            ->submit();
+    });
+    Route::get('/clientback/page', function () {
+        return '您已點擊返回按鈕，回到商店頁面';
+    });
 
 });
