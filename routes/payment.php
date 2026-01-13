@@ -16,7 +16,7 @@ Route::prefix('/payment')->group(function () {
     // 4003-5511-1111-1111 (紅利折抵)
     Route::get('/basic', function () {
         return NewebPay::payment()
-            ->withOrder('Order001')
+            ->withOrder('Order'.time())
             ->withAmount(1050)
             ->withItemDescription('測試商品')
             ->withEmail('customer@example.com')
@@ -26,7 +26,7 @@ Route::prefix('/payment')->group(function () {
     // 1-2. 測試 ReturnUrl (付款完成後導向頁面)
     Route::get('/return', function () {
         return NewebPay::payment()
-            ->withOrder('Order001')
+            ->withOrder('Order'.time())
             ->withAmount(1050)
             ->withItemDescription('測試商品')
             ->withEmail('customer@example.com')
