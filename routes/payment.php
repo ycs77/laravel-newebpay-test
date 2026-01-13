@@ -54,6 +54,22 @@ Route::prefix('/payment')->group(function () {
     });
 
     // 1-4. 測試 CustomerUrl (商店取號網址)
+    Route::get('/customer', function () {
+        return NewebPay::payment()
+            ->withOrder('Order'.time())
+            ->withAmount(1050)
+            ->withItemDescription('測試商品')
+            ->withEmail('customer@example.com')
+            ->withPaymentMethods([
+                'VACC' => true,
+            ])
+            ->withCustomerUrl(config('app.url').'/payment/customer/callback')
+            ->submit();
+    });
+    Route::post('/customer/callback', function (Request $request) {
+        $result = NewebPay::customer($request);
+        return response()->json($result->data());
+    });
 
     // 1-5. 測試 ClientBackUrl (付款時點擊「返回按鈕」的網址)
 
