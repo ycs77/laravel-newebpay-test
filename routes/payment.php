@@ -35,7 +35,7 @@ Route::prefix('/payment')->group(function () {
     });
     Route::post('/return/callback', function (Request $request) {
         $result = NewebPay::result($request);
-        return response()->json($result->data());
+        return response()->json($result->toArray());
     });
 
     // 1-3. 測試 NotifyUrl (付款完成後的通知連結，以幕後方式回傳給商店相關支付結果資料)
@@ -50,7 +50,7 @@ Route::prefix('/payment')->group(function () {
     });
     Route::post('/notify/callback', function (Request $request) {
         $result = NewebPay::result($request);
-        logger()->info('NewebPay NotifyUrl Callback', $result->data());
+        logger()->info('NewebPay NotifyUrl Callback', $result->toArray());
     });
 
     // 1-4. 測試 CustomerUrl (商店取號網址)
@@ -68,7 +68,7 @@ Route::prefix('/payment')->group(function () {
     });
     Route::post('/customer/callback', function (Request $request) {
         $result = NewebPay::customer($request);
-        return response()->json($result->data());
+        return response()->json($result->toArray());
     });
 
     // 1-5. 測試 ClientBackUrl (付款時點擊「返回按鈕」的網址)
