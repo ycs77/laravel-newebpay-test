@@ -30,12 +30,15 @@ Route::prefix('/payment')->group(function () {
             ->withAmount(1050)
             ->withItemDescription('測試商品')
             ->withEmail('customer@example.com')
-            ->withReturnUrl(config('app.url').'/payment/return/callback')
+            ->withReturnUrl('/payment/return/callback')
             ->submit();
     });
     Route::post('/return/callback', function (Request $request) {
         $result = NewebPay::result($request);
-        return response()->json($result->toArray());
+        return response()->json([
+            'raw' => $result->toArray(),
+            'result' => $result->result(),
+        ]);
     });
 
     // 1-3. 測試 NotifyUrl (付款完成後的通知連結，以幕後方式回傳給商店相關支付結果資料)
@@ -45,7 +48,7 @@ Route::prefix('/payment')->group(function () {
             ->withAmount(1050)
             ->withItemDescription('測試商品')
             ->withEmail('customer@example.com')
-            ->withNotifyUrl(config('app.url').'/payment/notify/callback')
+            ->withNotifyUrl('/payment/notify/callback')
             ->submit();
     });
     Route::post('/notify/callback', function (Request $request) {
@@ -63,7 +66,7 @@ Route::prefix('/payment')->group(function () {
             ->withPaymentMethods([
                 'VACC' => true,
             ])
-            ->withCustomerUrl(config('app.url').'/payment/customer/callback')
+            ->withCustomerUrl('/payment/customer/callback')
             ->submit();
     });
     Route::post('/customer/callback', function (Request $request) {
@@ -78,7 +81,7 @@ Route::prefix('/payment')->group(function () {
             ->withAmount(1050)
             ->withItemDescription('測試商品')
             ->withEmail('customer@example.com')
-            ->withClientBackUrl(config('app.url').'/payment/clientback/page')
+            ->withClientBackUrl('/payment/clientback/page')
             ->submit();
     });
     Route::get('/clientback/page', function () {

@@ -12,7 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->validateCsrfTokens(except: [
-            '/payment/*',
+            '/payment/return/callback',
+            '/payment/notify/callback',
+            '/payment/customer/callback',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
