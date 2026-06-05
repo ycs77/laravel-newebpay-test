@@ -6030,7 +6030,7 @@
             "dist": {
                 "type": "path",
                 "url": "../laravel-newebpay",
-                "reference": "7d2f3ae135abb68c7b6d1c7389045160b710387e"
+                "reference": "1cb8f4dc0e24bae9bf27d3f7004702dc1d5851d8"
             },
             "require": {
                 "guzzlehttp/guzzle": ">=7.2",
@@ -6041,14 +6041,16 @@
                 "illuminate/support": ">=9.0",
                 "nesbot/carbon": "^2.67 || ^3.0",
                 "php": ">=8.1",
-                "ycs77/laravel-recover-session": "^1.2"
+                "ycs77/laravel-recover-session": ">=1.2"
             },
             "require-dev": {
                 "laravel/pint": "^1.20",
                 "mockery/mockery": "^1.4",
                 "orchestra/testbench": ">=7.0",
-                "pestphp/pest": "^1.23 || ^2.36.0 || ^3.8.2",
-                "pestphp/pest-plugin-laravel": "^1.0 || ^2.0 || ^3.0"
+                "pestphp/pest": ">=1.23",
+                "pestphp/pest-plugin-laravel": ">=1.0",
+                "phpstan/phpstan": "^2.2",
+                "rector/rector": "^2.4"
             },
             "type": "library",
             "extra": {
@@ -6072,6 +6074,30 @@
                 }
             },
             "scripts": {
+                "refacto": [
+                    "php vendor/bin/rector"
+                ],
+                "lint": [
+                    "php vendor/bin/pint --parallel"
+                ],
+                "test:refacto": [
+                    "php vendor/bin/rector --dry-run"
+                ],
+                "test:lint": [
+                    "php vendor/bin/pint --parallel --test"
+                ],
+                "test:analyse": [
+                    "php vendor/bin/phpstan analyse --ansi"
+                ],
+                "test:unit": [
+                    "php vendor/bin/pest"
+                ],
+                "test": [
+                    "@test:refacto",
+                    "@test:lint",
+                    "@test:analyse",
+                    "@test:unit"
+                ],
                 "post-autoload-dump": [
                     "@php vendor/bin/testbench package:discover --ansi"
                 ]
@@ -6097,33 +6123,36 @@
         },
         {
             "name": "ycs77/laravel-recover-session",
-            "version": "v1.2.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ycs77/laravel-recover-session.git",
-                "reference": "3b3481cfa37e4191cdb9a8066d8a1e31e4c5cd68"
+                "reference": "56cef707709759da7ca5f0043692fcde326608bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ycs77/laravel-recover-session/zipball/3b3481cfa37e4191cdb9a8066d8a1e31e4c5cd68",
-                "reference": "3b3481cfa37e4191cdb9a8066d8a1e31e4c5cd68",
+                "url": "https://api.github.com/repos/ycs77/laravel-recover-session/zipball/56cef707709759da7ca5f0043692fcde326608bb",
+                "reference": "56cef707709759da7ca5f0043692fcde326608bb",
                 "shasum": ""
             },
             "require": {
-                "illuminate/cache": ">=9.0",
-                "illuminate/config": ">=9.0",
-                "illuminate/contracts": ">=9.0",
-                "illuminate/encryption": ">=9.0",
-                "illuminate/http": ">=9.0",
-                "illuminate/session": ">=9.0",
-                "illuminate/support": ">=9.0",
-                "php": ">=8.1",
-                "symfony/http-foundation": ">=6.0"
+                "illuminate/cache": ">=11.0",
+                "illuminate/config": ">=11.0",
+                "illuminate/contracts": ">=11.0",
+                "illuminate/encryption": ">=11.0",
+                "illuminate/http": ">=11.0",
+                "illuminate/session": ">=11.0",
+                "illuminate/support": ">=11.0",
+                "php": ">=8.2",
+                "symfony/http-foundation": ">=7.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.4",
-                "orchestra/testbench": ">=7.0",
-                "pestphp/pest": "^2.6"
+                "laravel/pint": "^1.0",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": ">=9.0",
+                "pestphp/pest": ">=2.36",
+                "phpstan/phpstan": "^2.2",
+                "rector/rector": "^2.4"
             },
             "type": "library",
             "extra": {
@@ -6151,10 +6180,10 @@
                     "email": "yangchenshin77@gmail.com"
                 }
             ],
-            "description": "Recover Laravel session when form post back from third-party API.",
+            "description": "Recover Laravel session when sending a form post request back from a third-party API.",
             "homepage": "https://github.com/ycs77/laravel-recover-session",
             "support": {
-                "source": "https://github.com/ycs77/laravel-recover-session/tree/v1.2.0"
+                "source": "https://github.com/ycs77/laravel-recover-session/tree/v2.0.0"
             },
             "funding": [
                 {
@@ -6162,7 +6191,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-06-20T09:48:47+00:00"
+            "time": "2026-06-05T14:23:39+00:00"
         }
     ],
     "packages-dev": [
